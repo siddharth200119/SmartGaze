@@ -1,0 +1,4 @@
+-> Implement Sessions: https://stackoverflow.com/questions/37183766/how-to-get-the-session-value-in-ejs
+-> Make actions menu
+-> Implement database for alarms
+-> Implement database for widgets
