@@ -16,5 +16,5 @@ app.listen(port, function (){
 })
 
 app.get("/", function(req, res){
-    res.render("home");
-})
+    res.render("home", {appTitle: "Home"});
+});
