@@ -38,7 +38,15 @@ app.get("/home", function(req, res){
 
 app.get("/login", function(req, res){
     if(!req.session.user){
-        res.render("login", {appTitle: "Login"})
+        res.render("login", {appTitle: "Login"});
+    }else{
+        res.redirect("/home");
+    }
+})
+
+app.get("/register", function(req, res){
+    if(!req.session.user){
+        res.render("register", {appTitle: "Register"});
     }else{
         res.redirect("/home");
     }
