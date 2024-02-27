@@ -1,11 +1,22 @@
 const express = require("express");
 const path = require('path');
-const app = express()
+const app = express();
+const session = require("express-session");
+require('dotenv').config()
+
+
+//express setup
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, '/views'));
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+  }));
 
 
+//listening port
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3069;
@@ -13,8 +24,22 @@ if (port == null || port == "") {
 
 app.listen(port, function (){
     console.log("Mobile App started");
-})
-
-app.get("/", function(req, res){
-    res.render("home", {appTitle: "Home"});
 });
+
+//routes
+
+app.get("/home", function(req, res){
+    if(req.session.user){
+        res.render("home", {appTitle: "Home"});
+    }else{
+        res.redirect("/login");
+    }
+});
+
+app.get("/login", function(req, res){
+    if(!req.session.user){
+        res.render("login", {appTitle: "Login"})
+    }else{
+        res.redirect("/home");
+    }
+})
