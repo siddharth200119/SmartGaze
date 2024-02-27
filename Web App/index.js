@@ -30,7 +30,15 @@ app.listen(port, function (){
 
 app.get("/home", function(req, res){
     if(req.session.user){
-        res.render("home", {appTitle: "Home"});
+        const params = {
+            siteTitle: "Home", 
+            appTitle: req.session.userName,
+            appHeaderBtn: {
+                title: "Logout",
+                route: "/logout"
+            }
+        }
+        res.render("home", );
     }else{
         res.redirect("/login");
     }
@@ -38,7 +46,15 @@ app.get("/home", function(req, res){
 
 app.get("/login", function(req, res){
     if(!req.session.user){
-        res.render("login", {appTitle: "Login"});
+        const params = {
+            siteTitle: "Login", 
+            appTitle: "Login",
+            appHeaderBtn: {
+                title: "Register",
+                route: "/register"
+            }
+        }
+        res.render("login", params);
     }else{
         res.redirect("/home");
     }
@@ -46,7 +62,15 @@ app.get("/login", function(req, res){
 
 app.get("/register", function(req, res){
     if(!req.session.user){
-        res.render("register", {appTitle: "Register"});
+        const params = {
+            siteTitle: "Register", 
+            appTitle: "Register",
+            appHeaderBtn: {
+                title: "Login",
+                route: "/login"
+            }
+        }
+        res.render("register", params);
     }else{
         res.redirect("/home");
     }

@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= appTitle %></title>
+    <title><%= siteTitle %></title>
     <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body>
+    <div id="header">
+        <div></div>
+        <h1 class="title"><%= appTitle %></h1>
+        <div class="buttons">
+            <a class="button" href=<%= appHeaderBtn.route %>><%= appHeaderBtn.title %></a>
+        </div>
+    </div>

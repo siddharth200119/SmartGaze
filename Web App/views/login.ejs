@@ -1,7 +1,16 @@
-<%- include('header', {appTitle: appTitle})%>
+<%- include('header', {siteTitle: siteTitle, appTitle: appTitle})%>
 
 <div>
-    <h1>login</h1>
+    <form class="authForm">
+        <div class="formField">
+            <label for="username">Enter Username/Email:</label>
+            <input type="text" id="username" max="100">
+        </div>
+        <div class="formField">
+            <label for="password">Enter password:</label>
+            <input type="password" id="password" min="8" max="30">
+        </div>
+    </form>
 </div>
 
 <%- include('footer') %>

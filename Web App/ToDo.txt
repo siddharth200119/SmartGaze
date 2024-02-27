@@ -3,3 +3,4 @@
 -> Make actions menu
 -> Implement database for alarms
 -> Implement database for widgets
+-> PWA: https://blog.logrocket.com/how-to-build-a-progressive-web-app-pwa-with-node-js/
