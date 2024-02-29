@@ -1,9 +1,6 @@
 from flask import Flask, request
 import requests
 import threading
-import cv2
-import mediapipe as mp
-import pyautogui
 
 app = Flask(__name__)
 
