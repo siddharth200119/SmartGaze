@@ -1,16 +1,40 @@
 <%- include('header', {siteTitle: siteTitle, appTitle: appTitle})%>
 
 <div>
-    <form class="authForm">
+    <form action="/api/login" method="post" id="loginForm" class="authForm" enctype="application/x-www-form-urlencoded">
         <div class="formField">
             <label for="username">Enter Username/Email:</label>
-            <input type="text" id="username" max="100">
+            <input name="username" type="text" id="username" max="100">
         </div>
         <div class="formField">
             <label for="password">Enter password:</label>
-            <input type="password" id="password" min="8" max="30">
+            <input name="password" type="password" id="password" min="1" max="30">
         </div>
+        <button type="submit">submit</button>
     </form>
 </div>
+
+<!-- <script>
+    const form = document.getElementById("loginForm")
+    const email = document.getElementById("username")
+    const pass = document.getElementById("password")
+    form.addEventListener("submit", async function(e){
+        e.preventDefault();
+        console.log("hello")
+        const response = await fetch("/api/login", {
+                            method: "POST",
+                            mode: "cors",
+                            cache: "no-cache",
+                            credentials: "same-origin",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: {
+                                "email": "email",
+                                "password": "pass"
+                            }
+                        });
+    })
+</script> -->
 
 <%- include('footer') %>
