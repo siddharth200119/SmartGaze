@@ -45,10 +45,17 @@ app.listen(port, function (){
 
 app.get("/home", function(req, res){
     if(req.session.uid){
+        console.log(req.session.uid)
+        var username
+            con.query("SELECT * FROM Users WHERE UID = " + req.session.uid, function(err, result, fields){
+                if(err) throw err;
+                console.log(result);
+                username = result[0].user_name;
+            })
         const params = {
             siteTitle: "Home", 
             appTitle: req.session.userName,
-            uid: req.session.uid,
+            uname: username,
             appHeaderBtn: {
                 title: "Logout",
                 route: "/logout"
@@ -97,9 +104,6 @@ app.get("/register", function(req, res){
 app.post("/api/login", function(req, res){
     const email = req.body.username;
     const password = req.body.password;
-    con.connect(function(err) {
-        if (err) throw err;
-        console.log("SQL Connected");
         con.query("SELECT UID FROM Users WHERE email = '" + email + "' and password = '" + password + "'", function(err, result, fields){
             if(err) throw err;
             if(result[0].UID){
@@ -110,5 +114,4 @@ app.post("/api/login", function(req, res){
             }
             console.log(result[0].UID)
         })
-    });
 })
