@@ -30,7 +30,8 @@ function TodoInput() {
             </tr>
           </thead>
           <tbody>
-            {listTodo.filter(todo => todo.complete === 0) // Filter tasks where complete variable is 0
+            {listTodo
+            //.filter(todo => todo.complete === 0) // Filter tasks where complete variable is 0
               .map(todo => (
                 <Todolist key={todo.id} title={todo.title} dueDate={todo.dueDate} />
                 // <tr key={todo.id}>

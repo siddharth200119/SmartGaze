@@ -30,13 +30,17 @@ body {
   width: 100%;
 }
 
+.todo-table th {
+  font-size: large;
+}
+
 .todo-table th, .todo-table td {
-  border: 1px solid white; /* Set border for table cells */
+  border: 2.5px solid white; 
   padding: 8px;
 }
 
 .todo-table th {
-  text-transform: uppercase;
+  text-transform: initial;
 }
 
 /* OLD CSS */

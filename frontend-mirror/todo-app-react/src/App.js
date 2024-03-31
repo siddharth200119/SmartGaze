@@ -9,8 +9,8 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 function App() {
   const layout = [
-    { i: 'todoInput', x: 0, y: 0, w: 6, h: 4 },
-    { i: 'todoList', x: 6, y: 0, w: 6, h: 4 },
+    { i: 'todoInput', x: 12, y: 12, w: 12, h: 4 },
+    { i: 'todoList', x: 12, y: 12, w: 12, h: 4 },
   ];
 
   return (
