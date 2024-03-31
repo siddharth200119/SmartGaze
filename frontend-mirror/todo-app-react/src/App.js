@@ -1,23 +1,3 @@
-// import React from 'react';
-// import './App.css';
-// import TodoInput from './components/TodoInput';
-// import Todolist from './components/TodoList';
-// // import GridLayout from "react-grid-layout";
-
-// function App() {
-
-//   return (
-//     <div className="container">
-//       <TodoInput />
-//       <Todolist/>
-
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
 import React from 'react';
 import './App.css';
 import { Responsive, WidthProvider } from 'react-grid-layout';
@@ -45,3 +25,23 @@ function App() {
 }
 
 export default App;
+
+
+// import React from 'react';
+// import './App.css';
+// import TodoInput from './components/TodoInput';
+// import Todolist from './components/TodoList';
+// // import GridLayout from "react-grid-layout";
+
+// function App() {
+
+//   return (
+//     <div className="container">
+//       <TodoInput />
+//       <Todolist/>
+
+//     </div>
+//   );
+// }
+
+// export default App;

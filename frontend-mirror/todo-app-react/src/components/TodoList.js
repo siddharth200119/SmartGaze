@@ -8,27 +8,13 @@ function Todolist(props) {
   const blockColor = isPastDue ? 'red' : 'inherit';
 
   return (
-    <li className="list-item" style={{ backgroundColor: blockColor }}>
-      <div className="title">{props.title}</div>
-      <div className="due-date">Due Date: {props.dueDate}</div>
-    </li>
+    <tr className="list-item" style={{ backgroundColor: blockColor }}>
+      <td>{props.title}</td>
+      <td>{props.dueDate}</td>
+    </tr>
   );
 }
 
 export default Todolist;
 
-
-
-// import React from 'react';
-
-// function Todolist(props) {
-//   return (
-//     <li className="list-item">
-//       <div className="title">{props.title}</div>
-//       <div className="due-date">Due Date: {props.dueDate}</div>
-//     </li>
-//   );
-// }
-
-// export default Todolist;
 

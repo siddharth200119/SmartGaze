@@ -1,6 +1,48 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #333;
+  color: white; 
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-heading {
+  color: white;
+  text-align: center;
+}
+
+.horizontal-line {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.todo-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.todo-table th, .todo-table td {
+  border: 1px solid white; /* Set border for table cells */
+  padding: 8px;
+}
+
+.todo-table th {
+  text-transform: uppercase;
+}
+
+/* OLD CSS */
+/* * {
+  margin: 0;
+  padding: 0;
 
 }
 
@@ -12,7 +54,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 1080px; */
+  // height: 1080px; 
 }
 
 .center-container {
@@ -23,7 +65,7 @@ body {
 .app-heading {
   padding: 4px;
   color: white;
-  /* text-align: center; */
+  //text-align: center; 
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   text-transform: uppercase;
 }
@@ -31,12 +73,12 @@ body {
 .list-container {
   display: flex;
   align-items: center;
-  /* margin-top: 5px; */
+  // margin-top: 5px; 
 }
 
 .list-item {
   list-style-type: none;
-  /* background-color: #596e8b; */
+  // background-color: #596e8b; 
   border: 2px solid rgb(161, 158, 158);
   color: white;
   padding: 3px;
@@ -63,4 +105,5 @@ body {
 
 .due-date {
   margin-left: 20px;
-}
+} */
+
