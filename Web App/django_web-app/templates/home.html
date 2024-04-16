@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Form</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif, sans-serif;
+      background-color: black;
+    }
+
+    .main {
+      justify-content: center;
+      display: flex;
+      margin: 40px 200px;
+    }
+
+    .forms {
+      flex: 50%;
+    }
+
+    form {
+      background-color: #fff;
+      width: 200px;
+      margin-top: 50px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .table {
+      flex: 50%;
+      margin: 50px 100px;
+      color: white;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #ffffff;
+    }
+
+    input,
+    select {
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #1e90ff;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 auto;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0d73db;
+    }
+
+    .message {
+      text-align: center;
+      font-size: medium;
+      color: red;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="forms">
+      <form class="form" action="{%url 'home' %}" method="post">
+        {% csrf_token %}
+        <div class="message">
+          {% for msg in messages %}
+          {{ msg }}
+          {% endfor %}
+        </div>
+        {{todoform.as_p}}
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Task Description</th>
+            <th>Due Date</th>
+            <th>Task Completed?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr>
+            <td>{{ task.tid }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.item_description }}</td>
+            <td>{{ task.due_date }}</td>
+            <td>{{ task.complete }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <form action="{%url 'home' %}" method='post'>
+    {% csrf_token %}
+    {{alarmform.as_p}}
+    <button type="submit">Submit</button> 
+  </form>
+</body>
+
+</html>
