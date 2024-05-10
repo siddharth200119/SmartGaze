@@ -26,22 +26,31 @@ class TodoListForm(forms.ModelForm):
             'item_description': forms.TextInput(),
             'due_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
-        required = {
-            'title': False,
-            'item_description': False,
-            'due_date': False,
-        }
+        
 
 #Form to set the alarm
 class AlarmForm(forms.ModelForm):
     class Meta:
-        model = Alarm
-        fields = ['alarm_date','alarm_time']
+        model = Bridge
+        fields = ['mirrorid', 'alarm_date','alarm_time']
         widgets = {
-            'alarm_time': forms.TimeInput(attrs={'type': 'time'}),
+            'alarm_time': forms.TimeInput(attrs={'type': 'time', 'format': '%I:%M %p'}),
             'alarm_date': forms.DateInput(attrs={'type': 'date'}),
         }
-        required = {
-            'alarm_time': False,
-            'alarm_date': False,
-        }
+        
+
+
+class StatusUpdateForm(forms.ModelForm):
+    status = forms.ChoiceField(choices=[('Pending', 'Pending'), ('Completed', 'Completed')])
+    tid = forms.ModelChoiceField(queryset=None, label='Task') 
+
+    def __init__(self, userid, *args, **kwargs):
+        super(StatusUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['tid'].queryset = To_do_list.objects.filter(userid=userid)
+    class Meta:
+        model = To_do_list
+        fields = ['tid','status']
+
+
+
+

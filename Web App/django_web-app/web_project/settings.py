@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web_app',
-    # 'django-flatpickr',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'trial',
         'USER': 'pratik',
-        'PASSWORD': 'pk@123',
+        'PASSWORD': 'Drc@1234',
         'HOST': 'localhost',   
         'PORT': '3306',        
     }

@@ -2,127 +2,181 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Form</title>
-  <style>
-    body {
-      font-family: 'Times New Roman', Times, serif, sans-serif;
-      background-color: black;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartGaze: Home</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-color: black;
+            color: white;
+        }
 
-    .main {
-      justify-content: center;
-      display: flex;
-      margin: 40px 200px;
-    }
+        .main {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px;
+        }
 
-    .forms {
-      flex: 50%;
-    }
+        .forms {
+            flex: 0 1 40%;
+            margin-right: 20px;
+        }
 
-    form {
-      background-color: #fff;
-      width: 200px;
-      margin-top: 50px;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px;
-    }
+        .table {
+            flex: 0 1 50%;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-    }
+        form {
+            background-color: #fff;
+            width: 200px;
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px;
+        }
 
-    .table {
-      flex: 50%;
-      margin: 50px 100px;
-      color: white;
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: black;
+        }
 
-    th,
-    td {
-      padding: 10px;
-      border: 1px solid #ffffff;
-    }
+        h3,
+        h1 {
+            text-align: center;
+        }
 
-    input,
-    select {
-      padding: 8px;
-      margin-bottom: 16px;
-      box-sizing: border-box;
-    }
+        h2 {
+            color: black;
+            text-align: center;
+        }
 
-    button {
-      background-color: #1e90ff;
-      color: #fff;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin: 0 auto;
-      transition: background-color 0.3s;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-    button:hover {
-      background-color: #0d73db;
-    }
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ffffff;
+        }
 
-    .message {
-      text-align: center;
-      font-size: medium;
-      color: red;
-      margin-bottom: 10px;
-    }
-  </style>
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            /* margin-bottom: 16px; */
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        button:hover {
+            background-color: #0d73db;
+
+        }
+
+        .message {
+            text-align: center;
+            font-size: medium;
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="main">
-    <div class="forms">
-      <form class="form" action="{%url 'home' %}" method="post">
-        {% csrf_token %}
-        <div class="message">
-          {% for msg in messages %}
-          {{ msg }}
-          {% endfor %}
-        </div>
-        {{todoform.as_p}}
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <div class="contatiner">
+        <h1>Welcome {{fname}}! </h1>
+        <button type="submit" class="logout"><a href="{% url 'user_logout' %}">Logout</a></button>
+        <div class="main">
+            <div class="forms">
+                <form class="form" action="{% url 'save_todo' %}" method="post">
+                    {% csrf_token %}
+                    <div class="message">
+                        {% for msg in messages %}
+                        {{ msg }}
+                        {% endfor %}
+                    </div>
+                    <h2>Create a Task</h2>
+                    {{todoform.as_p}}
+                    <button type="submit">Create Task</button>
+                </form>
+                <form action="{% url 'save_alarm' %}" method='post'>
+                    {% csrf_token %}
+                    <h2>Set an Alarm</h2>
+                    {{alarmform.as_p}}
+                    <button type="submit" style="font-weight: 200;">Set Alarm</button>
+                </form>
+                <form action="{% url 'update_task_status' %}" method='post'>
+                    {% csrf_token %}
+                    <h2>Update Task Status</h2>
+                    {{ updateform.as_p }}
+                    <button type="submit" style="font-weight: 200;">Set Alarm</button>
+                </form>
+            </div>
 
-    <div class="table">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Task Description</th>
-            <th>Due Date</th>
-            <th>Task Completed?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for task in tasks %}
-          <tr>
-            <td>{{ task.tid }}</td>
-            <td>{{ task.title }}</td>
-            <td>{{ task.item_description }}</td>
-            <td>{{ task.due_date }}</td>
-            <td>{{ task.complete }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+            <div class="table">
+                <h3>ToDo List</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Task Description</th>
+                            <th>Due Date</th>
+                            <th>Task Completed?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.tid }}</td>
+                            <td>{{ task.title }}</td>
+                            <td>{{ task.item_description }}</td>
+                            <td>{{ task.due_date }}</td>
+                            <td>{{ task.task_status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h3>Alarm List</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mirror ID</th>
+                            <th>Alarm Date</th>
+                            <th>Alarm Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alarm in alarms %}
+                        <tr>
+                            <td>{{ alarm.mirrorid }}</td>
+                            <td>{{ alarm.alarm_date }}</td>
+                            <td>{{ alarm.alarm_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
-  <form action="{%url 'home' %}" method='post'>
-    {% csrf_token %}
-    {{alarmform.as_p}}
-    <button type="submit">Submit</button> 
-  </form>
 </body>
 
 </html>

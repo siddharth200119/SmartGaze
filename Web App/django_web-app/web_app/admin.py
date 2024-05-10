@@ -3,7 +3,7 @@ from .models import *
 # Register your models here.
 
 class Mirror_UsersAdmin(admin.ModelAdmin):
-    list_display = ['id','username','first_name','last_name','face_pattern','api_key']
+    list_display = ['id','username','first_name','last_name','face_pattern','spotify_access_token','spotify_refresh_token']
     search_fields = ['id','first_name','last_name','username']
 
 class To_do_listAdmin(admin.ModelAdmin):
@@ -12,6 +12,10 @@ class To_do_listAdmin(admin.ModelAdmin):
 class MirrorAdmin(admin.ModelAdmin):
     list_display = ['mid']
 
+class BridgeAdmin(admin.ModelAdmin):
+    list_display = ['userid','mirrorid','layout','alarm_date','alarm_time']
+
 admin.site.register(Mirror_Users, Mirror_UsersAdmin)
 admin.site.register(To_do_list, To_do_listAdmin)
 admin.site.register(Mirror, MirrorAdmin)
+admin.site.register(Bridge, BridgeAdmin)
