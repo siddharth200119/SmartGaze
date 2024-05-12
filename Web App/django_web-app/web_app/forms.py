@@ -39,17 +39,17 @@ class AlarmForm(forms.ModelForm):
         }
         
 
-
 class StatusUpdateForm(forms.ModelForm):
-    status = forms.ChoiceField(choices=[('Pending', 'Pending'), ('Completed', 'Completed')])
-    tid = forms.ModelChoiceField(queryset=None, label='Task') 
+    task_status = forms.ChoiceField(choices=[('Pending', 'Pending'), ('Completed', 'Completed')])
+    tid = forms.ModelChoiceField(queryset=None, label='Task ID') 
 
     def __init__(self, userid, *args, **kwargs):
         super(StatusUpdateForm, self).__init__(*args, **kwargs)
         self.fields['tid'].queryset = To_do_list.objects.filter(userid=userid)
+
     class Meta:
         model = To_do_list
-        fields = ['tid','status']
+        fields = ['tid','task_status']
 
 
 

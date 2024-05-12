@@ -10,5 +10,8 @@ urlpatterns = [
     path('update_task_status/', update_task_status, name='update_task_status'),
     path('todo_api/<int:userid>', todo_api, name='todo_api'),
     path('alarm_api/<int:userid>', alarm_api, name='alarm_api'),
-    path('user_api/<int:userid>', user_api, name='user_api'),
+    path('get_face_patterns_api/<int:mirrorid>', get_face_patterns_api, name='get_face_patterns_api'),
+    path('get_everything_api/<int:userid>', get_everything_api, name='get_everything_api'),
+    path('spotify/login/', spotify_login, name='spotify_login'),
+    path('spotify/callback/', spotify_callback, name='spotify/callback/'),
 ]

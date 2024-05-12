@@ -51,7 +51,7 @@ class To_do_list(models.Model):
         # managed = False
 
     def __str__(self):
-        return f"{self.tid}: {self.title} "
+        return f"{self.tid} : {self.title} "
 
 
 class Bridge(models.Model):

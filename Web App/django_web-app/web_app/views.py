@@ -4,10 +4,15 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+from rest_framework import status
+import base64
+import json
+import requests
+import urllib
+from urllib.parse import urlencode
 from .models import *
 from .serializers import *
 from .forms import *
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 # Create your views here.
@@ -143,27 +148,25 @@ def save_alarm(request):
     # return render(request, 'home.html', context)
 
 
+#Function to update the task status in the To-Do List
 @login_required()
 def update_task_status(request):
     uid = request.user.id
-    try:
-        task = To_do_list.objects.get(tid=3)
-        if request.method == 'POST':
-            form = StatusUpdateForm(request.POST, userid=uid)
-            print("DONE")
-            if form.is_valid():
-                tid = form.cleaned_data['tid']
-                status = form.cleaned_data['status']
-                updated_task = To_do_list.objects.filter(tid=tid).update(task_status=status)
-                
+    if request.method == 'POST':
+        # form = StatusUpdateForm(request.POST)
+        form = StatusUpdateForm(userid=uid, data=request.POST)
+        if form.is_valid():
+            # tid = form.cleaned_data['tid']
+            tid = request.POST.get('tid')
+            status = form.cleaned_data['task_status']
+            try:
+                updated_task = To_do_list.objects.get(tid=tid, userid=uid)
+                updated_task.task_status = status   
+                updated_task.save()
                 messages.success(request, 'Task status updated successfully.')
-                return redirect('home')
-        # else:
-            # form = TodoListUpdateForm(instance=task)
-        # return render(request, 'update_task_status.html', {'form': form, 'task': task})
-    except To_do_list.DoesNotExist:
-        messages.error(request, 'Task not found.')
-        return redirect('home')
+            except To_do_list.DoesNotExist:
+                messages.error(request, 'Task not found.')
+    return redirect('home')
 
 
 ''' API Functions '''
@@ -179,18 +182,6 @@ def todo_api(request, userid):
         })
 
 
-# class Todosapi(api_view):
-#         def get(self, request):
-#             uid = request.user
-#             data = To_do_list.objects.filter(userid=uid)
-#             serializer = ToDoSerializer(data, many=True)
-#             print(data)
-#             return Response({
-#                 'message': 'Added data',
-#                 'data': serializer.data
-#                 })
-
-
 #API to get the details of the Alarm
 @api_view(["GET"])
 def alarm_api(request, userid):
@@ -202,11 +193,94 @@ def alarm_api(request, userid):
         })
 
 
-#API to get the details of the User's face pattern with user ID
+#API to get the details of the User's face pattern with user ID & username
 @api_view(["GET"])
-def user_api(request, userid):
-    data = User.objects.filter(userid=userid)
-    serializer = UserSerializer(data, many=True)
-    return Response({
-        'data': serializer.data
+def get_face_patterns_api(request, mirrorid):
+    bridge_data = Bridge.objects.filter(mirrorid=mirrorid)
+    serialized_data = []
+
+    for bridge_obj in bridge_data:
+        user_serializer = UsersSerializer(bridge_obj.userid)
+        serialized_data.append({
+            'userid': bridge_obj.userid.id,
+            'username': user_serializer.data['username'],
+            'face_pattern': user_serializer.data['face_pattern']
         })
+
+    return Response({'data': serialized_data})
+
+
+#API to get all the user data, with alarm & todo list details
+@api_view(["GET"])
+def get_everything_api(request, userid):
+    bridge_data = Bridge.objects.filter(userid=userid).first()
+    if not bridge_data:
+        return Response({'error': 'Mirror not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = BridgeSerializer(bridge_data)
+    return Response(serializer.data)
+
+
+#Function to Login to spotify using spotify SDK Endpoints
+def spotify_login(request):
+    scope = "streaming \
+               user-read-email \
+               user-read-private"
+    auth_query_parameters = {
+        "response_type": "code",
+        "client_id": 'f9b2ce4da25d46089002cb53895170df',
+        "scope": scope,
+        "redirect_uri": "http://localhost:8000/spotify/callback",
+    }
+    authorization_url = 'https://accounts.spotify.com/authorize/?' + urlencode(auth_query_parameters)
+    return redirect(authorization_url)
+
+
+# @login_required()
+@api_view(["GET"])
+def spotify_callback(request):
+    code = request.GET.get('code')
+    if code:
+        token_url = 'https://accounts.spotify.com/api/token'
+
+        spotify_client_id = 'f9b2ce4da25d46089002cb53895170df'
+        spotify_client_secret = '58e3fd6f522c453a83f5e2fd96096b9f'
+
+        redirect_uri = 'http://localhost:8000/spotify/callback'
+
+        form_data = {
+            'code': code,
+            'redirect_uri': redirect_uri,
+            'grant_type': 'authorization_code'
+        }
+
+        # Encode the client ID and client secret as base64
+        auth_header = base64.b64encode(f'{spotify_client_id}:{spotify_client_secret}'.encode()).decode('utf-8')
+
+        headers = {
+            'Authorization': f'Basic {auth_header}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+
+        # Make the POST request to the token endpoint
+        response = requests.post(token_url, data=form_data, headers=headers)
+
+        content = json.loads(response.content)
+        access_token=content['access_token']
+        refresh_token = content['refresh_token']
+        uid = request.user.id
+        user = Mirror_Users.objects.filter(id=uid).update(spotify_access_token=access_token)
+
+        if response.status_code == 200:
+            access_token = response.json()['access_token']
+            return redirect('/')
+        else:
+            # Handle error if the request failed
+            return redirect('/error')
+
+    else:
+        # Handle error if code parameter is missing
+        return redirect('/error')
+    return Response(code)
+
+
