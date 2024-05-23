@@ -31,5 +31,3 @@ The Smart Gaze project aims to create an interactive mirror that provides real-t
 1. Raspberry Pi OS(64-bit) based on Debian Bookworm
 2. Python 3.11
 3. NodeJS 18+
-
-## Setup Instructions
