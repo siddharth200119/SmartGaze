@@ -2,19 +2,14 @@ import cv2
 import os
 import mediapipe as mp
 import argparse
-import sys
 import time
 from user_face_recognition import user_recognition
 import subprocess
-from numpy import sqrt 
 import multiprocessing
 import pyautogui
-import pytz
 from datetime import datetime, timezone
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
-from mediapipe.framework.formats import landmark_pb2
-import math
 import json
 import pygame
 from selenium import webdriver
@@ -22,10 +17,13 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import requests
 import RPi.GPIO as GPIO
-from dotenv import load_dotenv
-load_dotenv()
+from dotenv import load_dotenv, find_dotenv
 
-WebAppIP = os.getenv('WEBAPP_IP')
+dotenv_path = find_dotenv('../.env')
+load_dotenv(dotenv_path)
+
+webAppIP = os.getenv('WEBAPP_IP')
+webAppPort = os.getenv('WEBAPP_PORT')
 
 time_interval = 600
 
@@ -99,7 +97,7 @@ def run(model: str, num_hands: int,
 
     alarm_times = [time.time() + 15]
     
-    alarms_api = requests.get("http://" + WebAppIP + "/alarm_api/2")
+    alarms_api = requests.get("http://" + webAppIP + ":" + webAppPort + "/alarm_api/2")
     alarms = alarms_api.json()["data"]
     print(alarms)
     alarm_thread_instance = multiprocessing.Process(target=alarms_thread, args=(alarms, queue))
@@ -156,7 +154,7 @@ def run(model: str, num_hands: int,
                         uid = auth["uid"] 
                         if(current_frontend_state == "home"):
                           #call get all API
-                          api_data = requests.get("http://"+ WebAppIP +"/get_everything_api/" + str(uid))
+                          api_data = requests.get("http://"+ webAppIP + ":" + webAppPort +"/get_everything_api/" + str(uid))
                           data = api_data.json()
                           print(data)
                           data["layout"] = json.loads(data["layout"])
