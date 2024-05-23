@@ -1,0 +1,111 @@
+.userName{
+    color: white;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    top: -30%;
+    width: 100%;
+    text-align: center;
+    font-size: 90px;
+    animation-name: intro_zoomIn, intro_leaveScreen;
+    animation-duration: 1.5s, 2.5s;
+}
+
+@keyframes intro_zoomIn {
+    from {transform: scale(0.5);}
+    to {transform: scale(1);}
+}
+
+@keyframes intro_leaveScreen {
+    0% {top: 25%;}
+    60% {top: 25%;}
+    100% {top: -30%}
+}
+
+.layout{
+    animation:  intro_fadeIn;
+    animation-duration: 2.5s;
+}
+
+@keyframes intro_fadeIn {
+    0% {opacity: 0%;}
+    60% {opacity: 0%;}
+    100% {opacity: 100%;}
+}
+
+.spotify{
+    position: fixed;
+    min-width: 100%;
+    bottom: -200px;
+    transition: bottom ease 1s;
+}
+
+.snapshot-popup{
+    position: fixed;
+    bottom: -200px;
+    transition: bottom ease 1s;
+    margin: auto;
+    background-color: grey;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 45%;
+}
+
+.show{
+    bottom: 0;
+}
+
+.react-calendar {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transform: scale(0.83);
+
+    border-radius: 10px;
+    border: 2px solid white
+}
+
+.react-calendar__navigation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.react-calendar__navigation button {
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.react-calendar__navigation button:disabled {
+    color: gray;
+}
+
+.react-calendar__month-view__days__day {
+    color: white;
+}
+
+.react-calendar__tile {
+    background: transparent;
+    color: white;
+    border-radius: 6px;
+    padding: 0.5em;
+    font-size: 1em;
+}
+
+.react-calendar__tile--now {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.react-calendar__tile--active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.react-calendar__tile--hover {
+    background: rgba(255, 255, 255, 0.1);
+}

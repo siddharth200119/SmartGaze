@@ -1,0 +1,18 @@
+.News_widget{
+    background: transparent;
+    max-width: 400px;
+    height: 80%;
+    margin: 0 1rem;
+    padding: 4px;
+    word-wrap: normal;
+    color: white;
+    font-size: small;
+    overflow-y: hidden;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.News_widget h3{
+    width: 100%;
+    text-align: center;
+}

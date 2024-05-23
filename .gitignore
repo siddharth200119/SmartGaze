@@ -1,0 +1,38 @@
+# Global ignores
+*.log
+*.pyc
+__pycache__/
+*.swp
+
+# Ignore files and directories specific to ReactJS (in the UI folder)
+GazeUI/node_modules/
+GazeUI/build/
+GazeUI/.env
+
+# Ignore files and directories specific to Python (in the UI folder)
+UI/.venv/
+UI/.env
+UI/.DS_Store
+UI/venv/
+UI/*.pyc
+UI/__pycache__/
+
+# Ignore files and directories specific to Django (in the WebApp folder)
+WebApp/*.pyc
+WebApp/__pycache__/
+WebApp/staticfiles/
+WebApp/media/
+WebApp/db.sqlite3
+WebApp/.env
+WebApp/.DS_Store
+
+# Ignore environment configuration files
+.env
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db

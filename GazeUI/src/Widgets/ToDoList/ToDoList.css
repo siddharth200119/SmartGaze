@@ -1,0 +1,35 @@
+  table tr {
+    border: 1px solid white;
+    padding: 20px;
+  }
+
+  .todo{
+    border: 2px solid white;
+    border-radius: 10px;
+  }
+
+  table {
+    border-collapse: collapse;
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: transparent;
+  }
+  
+  table th,
+  table td {
+    border-left: 1px solid white; /* Add left border */
+    border-right: 1px solid white; /* Add right border */
+    border-radius: 10px;
+    padding: 10px 20px; /* Optional: Add padding for better spacing */
+  }
+  
+  table th:first-child,
+  table td:first-child {
+    border-left: none; /* Remove left border for first column */
+  }
+  
+  table th:last-child,
+  table td:last-child {
+    border-right: none; /* Remove right border for last column */
+  }
