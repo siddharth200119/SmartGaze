@@ -1,0 +1,292 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartGaze: Home</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px;
+        }
+
+        .header,
+        .message,
+        .spotify-button {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .forms {
+            display: flex;
+            gap: 40px;
+            margin: 50px auto;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: black;
+        }
+
+        h3,
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: black;
+            text-align: center;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ffffff;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        form {
+            height: fit-content;
+            width: 200px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button:hover {
+            background-color: #0d73db;
+
+        }
+
+        .message {
+            text-align: center;
+            font-size: medium;
+            font-weight: 1000;
+            color: red;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #0d73db;
+        }
+
+        .message {
+            text-align: center;
+            font-size: medium;
+            font-weight: 1000;
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .spotify-button {
+            background-color: #1db954;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .spotify-button:hover {
+            background-color: #24db5a;
+        }
+
+        .spotify-logo {
+            max-width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        @media (min-width: 800px) {
+            .forms {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 40px;
+                width: auto;
+            }
+
+            form {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome {{fname}}! </h1>
+        <button type="submit" class="logout"><a href="{% url 'user_logout' %}">Logout</a></button>
+        <div class="message">
+            {% for msg in messages %}
+            {{ msg }}
+            {% endfor %}
+        </div>
+
+        <button class="spotify-button">
+            <!-- <img src="../static/spotify (1).svg" alt="Spotify Logo" class="spotify-logo"> -->
+            <a href="{% url 'spotify_login' %}" target="_blank">Login to Spotify</a>
+        </button>
+
+        <div class="main">
+            <div class="forms-container">
+                <div class="forms">
+                    <form action="{% url 'save_todo' %}" method="post">
+                        {% csrf_token %}
+                        <h2>Create a Task</h2>
+                        {{todoform.as_p}}
+                        <button type="submit" class="submit_btn">Create Task</button>
+                    </form>
+                    <form action="{% url 'save_alarm' %}" method='post'>
+                        {% csrf_token %}
+                        <h2>Set an Alarm</h2>
+                        {{alarmform.as_p}}
+                        <button type="submit" class="submit_btn">Set Alarm</button>
+                    </form>
+                    <form action="{% url 'update_task_status' %}" method='post'>
+                        {% csrf_token %}
+                        <h2>Update Task Status</h2>
+                        {{ updateform.as_p }}
+                        <button type="submit" class="submit_btn">Set Alarm</button>
+                    </form>
+                    <form action="{% url 'add_mirror' %}" method='post'>
+                        {% csrf_token %}
+                        <h2>Add Mirror</h2>
+                        {{mirrorform.as_p}}
+                        <button type="submit" class="submit_btn">Add Mirror</button>
+                    </form>
+                    <form action="{% url 'add_news_pref' %}" method='post'>
+                        {% csrf_token %}
+                        <h2>Add News Preference</h2>
+                        {{newsform.as_p}}
+                        <button type="submit" class="submit_btn">Add Topics for News</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table">
+                <h3>ToDo List</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Task Description</th>
+                            <th>Due Date</th>
+                            <th>Task Completed?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.tid }}</td>
+                            <td>{{ task.title }}</td>
+                            <td>{{ task.item_description }}</td>
+                            <td>{{ task.due_date }}</td>
+                            <td>{{ task.task_status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h3>Alarm List</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mirror ID : Name</th>
+                            <th>Alarm Date</th>
+                            <th>Alarm Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alarm in alarms %}
+                        <tr>
+                            <td>{{ alarm.mirrorid }}</td>
+                            <td>{{ alarm.alarm_date }}</td>
+                            <td>{{ alarm.alarm_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h3>News Topics List</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Preferred Topics for News</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for news in news %}
+                        <tr>
+                            <td>{{ news.userid.first_name }}</td>
+                            <td>{{ news.topic }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

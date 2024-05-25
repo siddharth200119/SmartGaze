@@ -1,6 +1,0 @@
--> Implement Sessions: https://stackoverflow.com/questions/37183766/how-to-get-the-session-value-in-ejs
--> Make DB for users
--> Make actions menu
--> Implement database for alarms
--> Implement database for widgets
--> PWA: https://blog.logrocket.com/how-to-build-a-progressive-web-app-pwa-with-node-js/
