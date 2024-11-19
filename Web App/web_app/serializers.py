@@ -1,57 +1,67 @@
+"""
+    Serializers for The SmartGaze Web App
+"""
 from .models import *
 from rest_framework import serializers
 
-# class ToDoSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = To_do_list
-#         fields = ['title','due_date','task_status','userid']
 
-
-# Serializer to send Alarm details in json format
 class AlarmSerializer(serializers.ModelSerializer):
+    """
+        Serializer to get Alarm details format
+    """
     class Meta:
         model = Bridge
         fields = ['userid','alarm_date','alarm_time']
 
 
-        '''New Serializers'''
-
-
-# Serializer to send Spotify tokens in JSON
 class SpotifySerializer(serializers.ModelSerializer):
+    """
+        Serializer to get Spotify tokens 
+    """
     class Meta:
         model = Mirror_Users
         fields = ['id','spotify_access_token', 'spotify_refresh_token']
 
 
-# Serializer to send User's face pattern  in JSON
 class UsersSerializer(serializers.ModelSerializer):
+    """
+        Serializer to get User's face pattern  
+    """
     class Meta:
         model = Mirror_Users
         fields = ['id', 'username', 'face_pattern']
 
 
-# Serializer to send User's ToDo List tasks in JSON
 class ToDoListSerializer(serializers.ModelSerializer):
+    """
+        Serializer to get User's ToDo List tasks
+    """
     class Meta:
         model = To_do_list
         fields = ['title','due_date','task_status']
 
 
-# Serializer to send Spotify tokens in JSON
 class MirrorUsersSerializer(serializers.ModelSerializer):
+    """
+        Serializer to get Spotify tokens
+    """
     class Meta:
         model = Mirror_Users
         fields = ['id', 'username', 'spotify_access_token']
 
-# Serializer to send Spotify tokens in JSON
 class NewsSerializer(serializers.ModelSerializer):
+    """
+        Serializer to get User's Preferred News Topics
+    """
     class Meta:
         model = News_pref
         fields = ['topic']
 
 
 class BridgeSerializer(serializers.ModelSerializer):
+    """
+        Serializer to get the data necessary for the home screen of the Smart Mirror
+    """
     user_data = MirrorUsersSerializer(source='userid', read_only=True)
     topics = serializers.SerializerMethodField()
     top_10_todo = serializers.SerializerMethodField()

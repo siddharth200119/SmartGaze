@@ -1,10 +1,18 @@
+""""
+    Django Forms for The SmartGaze Web App
+"""
+
 from django import forms
 from .models import *
 
-#Form to register a new account
+
 class RegistrationForm(forms.ModelForm):
+    """
+        Form to register a new account
+    """
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password'}))
     re_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Re-Enter your password'}))
+    connect_with_mirror = forms.ModelChoiceField(queryset=Mirror.objects.all(), label='mirror')
     class Meta:
         model = Mirror_Users
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
@@ -16,8 +24,10 @@ class RegistrationForm(forms.ModelForm):
         }
 
 
-#Form to add a task to ToDo
 class TodoListForm(forms.ModelForm):
+    """"
+        Form to add a task to ToDo
+    """
     class Meta:
         model = To_do_list
         fields = ['title','item_description','due_date']
@@ -29,8 +39,11 @@ class TodoListForm(forms.ModelForm):
         }
         
 
-#Form to set the alarm
+
 class AlarmForm(forms.ModelForm):
+    """
+        Form to set the alarm
+    """
     class Meta:
         model = Bridge
         fields = ['mirrorid', 'alarm_date','alarm_time']
@@ -39,8 +52,11 @@ class AlarmForm(forms.ModelForm):
             'alarm_date': forms.DateInput(attrs={'type': 'date'}),
         }
         
-#Form to update the status of a particular Task
+
 class StatusUpdateForm(forms.ModelForm):
+    """
+        Form to update the status of a particular Task
+    """
     task_status = forms.ChoiceField(choices=[('Pending', 'Pending'), ('Completed', 'Completed')])
     tid = forms.ModelChoiceField(queryset=None, label='Task ID') 
 
@@ -53,8 +69,11 @@ class StatusUpdateForm(forms.ModelForm):
         fields = ['tid','task_status']
 
 
-#Form to add a Mirror to the DB
+
 class MirrorForm(forms.ModelForm):
+    """
+        Form to add a Mirror to the DB
+    """
     class Meta:
         model = Mirror
         fields = ['mirror_name']
@@ -63,8 +82,11 @@ class MirrorForm(forms.ModelForm):
         }
         
 
-#Form to add a Mirror to the DB
+
 class NewsForm(forms.ModelForm):
+    """
+        Form to add a Mirror to the DB
+    """
     class Meta:
         model = News_pref
         fields = ['topic']

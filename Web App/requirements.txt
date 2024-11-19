@@ -3,3 +3,4 @@ djangorestframework
 mysqlclient
 requests
 urllib3
+python-dotenv

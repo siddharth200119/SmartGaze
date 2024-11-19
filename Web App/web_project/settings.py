@@ -78,14 +78,21 @@ WSGI_APPLICATION = 'web_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'trial',
-        'USER': 'demo',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',   
-        'PORT': '3306',        
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'trial',
+#         'USER': 'demo',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',   
+#         'PORT': '3306',        
+#     }
+# }
 
 AUTH_USER_MODEL = 'web_app.Mirror_Users'
 
@@ -125,6 +132,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # If you have a static folder at the project level
+    # If you have multiple directories where static files are stored, add them here
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

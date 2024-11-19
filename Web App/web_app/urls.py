@@ -1,5 +1,10 @@
-from django.urls import path, include
+"""
+    URLs for The SmartGaze Web App
+"""
+
+from django.urls import path
 from .views import *
+from . api import *
 urlpatterns = [
     path('', user_login, name='user_login'),
     path('register/', register, name='register'),
