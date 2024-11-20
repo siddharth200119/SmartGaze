@@ -123,6 +123,18 @@ def get_token_api(request, userid):
     return Response(serializer.data)
 
 
+# @api_view(["GET"])
+# def todo_api(request, userid):
+    """
+        API - To GET the tasks of ToDo List
+    """
+#     data = To_do_list.objects.filter(userid=userid)
+#     serializer = ToDoSerializer(data, many=True)
+#     return Response({
+#         'data': serializer.data
+#         })
+
+
 @api_view(["GET"])
 def spotify_login(request):
     """

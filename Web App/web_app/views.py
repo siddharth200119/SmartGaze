@@ -212,17 +212,6 @@ def add_news_pref(request):
     return redirect('home')
 
 
-''''''''''''''''''''''''''''''''''''''''''''''''' API Functions '''''''''''''''''''''''''''''''''''''
-
-
-#API to get the tasks of ToDo List
-# @api_view(["GET"])
-# def todo_api(request, userid):
-#     data = To_do_list.objects.filter(userid=userid)
-#     serializer = ToDoSerializer(data, many=True)
-#     return Response({
-#         'data': serializer.data
-#         })
 
 
 
