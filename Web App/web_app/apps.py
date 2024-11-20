@@ -5,3 +5,6 @@ class WebAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'web_app'
     verbose_name = 'SmartGaze Web App'
+
+    def ready(self):
+        import web_app.signals
